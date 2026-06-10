@@ -1,4 +1,4 @@
-# ECOM Customers Orders API
+# Public ECOM API
 
 This API has two tables Customers, Orders.<br> 
 
