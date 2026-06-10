@@ -1,26 +1,57 @@
 # Public ECOM API
 
-This API has two tables Customers, Orders.<br> 
+This API has four resources: Customers, Products, Cart, and Orders.<br>
 
-User can add Customers, Get Customers, Update Customer and Delete Customers. (CRUD) Operations.<br> 
+User can add Customers, Get Customers, Update Customer and Delete Customers. (CRUD) Operations.<br>
 
-User can Create Orders, Get Orders, Update Orders and Delete Orders. (CRUD) Operations.<br> 
+User can add Products, Get Products, Update Products and Delete Products. (CRUD) Operations.<br>
+
+User can add items to Cart, Update items in Cart, Get all Cart items and Remove items from Cart.<br>
+
+User can Create Orders, Get Orders, and Delete Orders.<br>
 
 But Orders endpoint requires User Authentication. <br>
 
-User need to get Access token first by Name and Email Address, this will give you access token.<br><br>
+User needs to register first (Name and Email Address) to get an Access token.<br><br>
 
 Base URL = https://customers-ecom-api.onrender.com
 
 ## Endpoints
 
+- [Server Status](#server-status)
 - [Customers](#customers)
+- [Products](#products)
+- [Cart](#cart)
 - [API Authentication](#api-authentication)
 - [Orders](#orders)
 
+## Server Status
+
+### Check server status
+
+**`/status`**
+
+**Method:** GET
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Server is running.                    |
+
+Example response:
+
+```
+{
+    "status": "OK",
+    "message": "Server is running",
+    "timestamp": "2026-06-10T10:00:00.000Z"
+}
+```
 
 ## Customers
-**Add Customer<br>**
+
+### Add Customer
 
 **`/customers/add`**
 
@@ -46,8 +77,7 @@ Example Body:
 | Status code | Description |
 |-----------------|-----------------------------------------------------|
 | 201 Created          | Indicates that request has been submitted successfully.                    |
-| 400 Bad Request  | If record with this CustomerID e.g., 92 already exists. Then following message should appear "Failed - Customer with ID 92 already exists". |
-
+| 400 Bad Request  | If a required field is missing, or if a record with this CustomerID e.g., 92 already exists. Then following message should appear "Failed - Customer with ID 92 already exists." |
 
 Example response:
 
@@ -57,7 +87,8 @@ Example response:
     "CustomerID": 92
 }
 ```
-**Get all Customers<br>**
+
+### Get all Customers / Get Customer(s) by filter
 
 **`/customers`**
 
@@ -79,6 +110,7 @@ Also called Retrieve Request - Returns the list of all Customers from Server.
 | Status code | Description |
 |-----------------|-----------------------------------------------------|
 | 200 OK          | Indicates a successful response.                    |
+| 404 Not Found   | If specific CustomerID, CustomerName, Country, City or Gender filter does not match any record, you will get "Customer not found". |
 
 Example response:
 
@@ -106,20 +138,8 @@ Example response:
     }
 ]
 ```
-**Get Single Customer or multiple Customers using Querry Parameters:<br>**
 
-**`/customers?CustomerID`** <br>
-<br>
-**Status codes**
-
-| Status code | Description |
-|-----------------|-----------------------------------------------------|
-| 200 OK          | Indicates a successful response.                    |
-| 404 Not Found   | If specific ID or CustomerName or Country or City does not exists you will get this error. |
-
-Note: Enter wrong CustomerID suppose 93. You will get message "Customer not found".
-
-**Update Customers<br>**
+### Update Customer
 
 **`/customers/update`**
 
@@ -142,8 +162,8 @@ Example Body:
 | Status code | Description |
 |-----------------|-----------------------------------------------------|
 | 200 OK          | Indicates that request has been submitted successfully.                    |
-| 404 Not found  | If CustomerID does not exists you will get this error. |
-
+| 400 Bad Request | If CustomerID is missing, or no update fields are provided. |
+| 404 Not found  | If CustomerID does not exist. |
 
 Example response:
 
@@ -156,14 +176,14 @@ Example response:
     "Country": "Poland"
 }
 ```
-Note: In above example on these properties were updated. So only those properties will be shown which were updated.
+Note: Only the properties that were updated are shown in the response.
 
-**Delete Customers<br>**
+### Delete Customer
 
 **`/customers/delete`**
 
-**Method:** Delete  
-Also called Delete Request - In this method records are deleted from the the Server. We need Body and CustomerID to be sent in the body as JSON format.
+**Method:** DELETE  
+Also called Delete Request - In this method records are deleted from the Server. We need the CustomerID sent in the body as JSON format.
 
 Example Body:
 ```
@@ -177,8 +197,8 @@ Example Body:
 | Status code | Description |
 |-----------------|-----------------------------------------------------|
 | 200 OK          | Indicates that record has been deleted successfully.                    |
-| 404 Not found  | If CustomerID does not exists you will get this error. |
-
+| 400 Bad Request | If CustomerID is not provided. |
+| 404 Not found  | If CustomerID does not exist. |
 
 Example response:
 
@@ -189,9 +209,296 @@ Example response:
 }
 ```
 
+## Products
+
+### Add Product
+
+**`/products/add`**
+
+**Method:** POST
+
+Example Body:
+```
+{
+  "ProductID": 5,
+  "ProductName": "Boys' Summer Short Sleeve",
+  "Price": 19.99,
+  "ImagePath": "images/product5.jpg"
+}
+```
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 201 Created          | Indicates that the product has been added successfully.                    |
+| 400 Bad Request  | If ProductID, ProductName, or Price is missing, or if a Product with this ProductID already exists. Then "Failed - Product with ID 5 already exists." |
+
+Example response:
+
+```
+{
+    "Message": "Product added successfully",
+    "ProductID": 5
+}
+```
+
+### Get all Products / Get Product(s) by filter
+
+**`/products`**
+
+**Method:** GET
+
+**Parameters**
+
+| Name        | Type    | Parameter | Required | Description |
+| ----------- | ------- | --------- | -------- | ----------- |
+| `ProductID`   | integer | Query | Optional | If specified, returns only that Product record. |
+| `ProductName` | string  | Query | Optional | If specified, returns the Product matching that name. |
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Indicates a successful response.                    |
+| 404 Not Found   | If the specified ProductID does not exist, "Product with ID {id} not found". |
+
+Example response:
+
+```
+[
+    {
+        "ProductID": 4,
+        "ProductName": "USB-C Power Bank",
+        "Price": 59.99,
+        "ImagePath": "images/product4.jpg"
+    },
+    {
+        "ProductID": 5,
+        "ProductName": "Boys' Summer Short Sleeve",
+        "Price": 19.99,
+        "ImagePath": "images/product5.jpg"
+    }
+]
+```
+
+### Update Product
+
+**`/products/update`**
+
+**Method:** PUT
+
+Example Body:
+```
+{
+  "ProductID": 5,
+  "Price": 17.99
+}
+```
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Indicates that the product was updated, or that no changes were made.                    |
+| 400 Bad Request | If ProductID is missing, or no update fields are provided. |
+| 404 Not found  | If ProductID does not exist. |
+
+Example response:
+
+```
+{
+    "message": "Product updated successfully and following properties were updated",
+    "Price": 17.99
+}
+```
+Note: If the submitted values are identical to the existing ones, the response will instead be:
+```
+{
+    "message": "No changes were made",
+    "ProductID": 5
+}
+```
+
+### Delete Product
+
+**`/products/delete`**
+
+**Method:** DELETE
+
+Example Body:
+```
+{
+  "ProductID": 5
+}
+```
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Indicates that the product was deleted successfully.                    |
+| 400 Bad Request | If ProductID is not provided. |
+| 404 Not found  | If ProductID does not exist. |
+
+Example response:
+
+```
+{
+    "message": "Product deleted successfully",
+    "ProductID": 5
+}
+```
+
+## Cart
+
+### Add item to Cart
+
+**`/cart/additem`**
+
+**Method:** POST  
+If the product is already in the cart, its quantity is incremented by 1. Otherwise it is added with quantity 1.
+
+Example Body:
+```
+{
+  "ProductID": 5
+}
+```
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 201 Created     | Product was newly added to the cart.                    |
+| 200 OK          | Product already in cart; quantity increased by 1. |
+| 400 Bad Request | If ProductID is not provided. |
+| 404 Not found  | If ProductID does not exist in Products. |
+
+Example response (new item):
+```
+{
+    "message": "Product added to Cart",
+    "ProductID": 5,
+    "ProductName": "Boys' Summer Short Sleeve",
+    "Quantity": 1
+}
+```
+
+Example response (existing item):
+```
+{
+    "message": "Quantity increased by 1",
+    "ProductID": 5,
+    "ProductName": "Boys' Summer Short Sleeve",
+    "Quantity": 2
+}
+```
+
+### Update item in Cart
+
+**`/cart/updateitem`**
+
+**Method:** PUT  
+Sets the quantity of a Product in the cart. If the product isn't in the cart yet, it is inserted with the given quantity. Setting Quantity to 0 removes the item from the cart.
+
+Example Body:
+```
+{
+  "ProductID": 5,
+  "Quantity": 3
+}
+```
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Quantity updated, or item removed (Quantity = 0).                    |
+| 201 Created     | New item added to the cart. |
+| 400 Bad Request | If ProductID or Quantity is missing, Quantity is negative, or Quantity is 0 for a non-existing item. |
+| 404 Not found  | If ProductID does not exist in Products. |
+
+Example response (updated):
+```
+{
+    "message": "Quantity updated",
+    "ProductID": 5,
+    "ProductName": "Boys' Summer Short Sleeve",
+    "newQuantity": 3
+}
+```
+
+Example response (removed):
+```
+{
+    "message": "Product removed from Cart",
+    "ProductID": 5,
+    "ProductName": "Boys' Summer Short Sleeve"
+}
+```
+
+### Get all Cart items
+
+**`/cart/getitems`**
+
+**Method:** GET
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Indicates a successful response.                    |
+
+Example response:
+
+```
+[
+    {
+        "ProductID": 4,
+        "ProductName": "USB-C Power Bank",
+        "Quantity": 1
+    },
+    {
+        "ProductID": 5,
+        "ProductName": "Boys' Summer Short Sleeve",
+        "Quantity": 3
+    }
+]
+```
+
+### Remove item from Cart
+
+**`/cart/removeitem`**
+
+**Method:** DELETE
+
+Example Body:
+```
+{
+  "ProductID": 5
+}
+```
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Indicates that the item has been removed successfully.                    |
+| 400 Bad Request | If ProductID is not provided. |
+| 404 Not found  | If ProductID is not found in the cart. |
+
+Example response:
+
+```
+{
+    "Message": "Product with ID 5 has been deleted successfully"
+}
+```
+
 ## API Authentication
 
-Some endpoints may require authentication. To submit or view an order, you need to register your API client and obtain an access token.
+Some endpoints (Orders) require authentication. To create or view orders, you need to register your API client and obtain an access token.
 
 The endpoints that require authentication expect a bearer token sent in the Authorization header.
 
@@ -214,15 +521,14 @@ The request body needs to be in JSON format.
 | `Name`  | string | body | Yes      | The name of the API client.            |
 | `Email` | string | body | Yes      | The email address of the API client. * |
 
-
-* The email address DOES NOT need to be real. The email will not be stored on the server.
+\* The email address DOES NOT need to be real. The email will not be stored on the server.
 
 **Status codes**
 
 | Status code     | Description                                                                       |
 |-----------------|-----------------------------------------------------------------------------------|
 | 201 Created     | Indicates that the client has been registered successfully.                       |
-| 400 Bad Request | Indicates that the parameters provided are invalid.                               |
+| 400 Bad Request | Indicates that Name and/or Email are missing.                               |
 | 409 Conflict    | Indicates that an API client has already been registered with this email address. |
 
 Example request body:
@@ -233,7 +539,71 @@ Example request body:
    "Email": "maddy@example.com"
 }
 ```
-The response body will contain the access token.
+
+Example response:
+```
+{
+    "accessToken": "123456789"
+}
+```
+
+### Retrieve Access Token
+
+**`/accesstoken`**
+
+**Method:** POST  
+If you've already registered, use this to retrieve your existing access token by Email.
+
+Example request body:
+```
+{
+  "Email": "maddy@example.com"
+}
+```
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Indicates a successful response.                    |
+| 400 Bad Request | If Email is not provided. |
+| 404 Not found   | If Email is not registered. |
+
+Example response:
+```
+{
+    "Email": "maddy@example.com",
+    "accessToken": "123456789"
+}
+```
+
+### Delete Access Token (Delete API client)
+
+**`/deletetoken`**
+
+**Method:** DELETE
+
+Example request body:
+```
+{
+  "Email": "maddy@example.com"
+}
+```
+
+**Status codes**
+
+| Status code | Description |
+|-----------------|-----------------------------------------------------|
+| 200 OK          | Indicates that the user/token has been deleted successfully.                    |
+| 400 Bad Request | If Email is not provided. |
+| 404 Not found   | If Email does not exist. |
+
+Example response:
+```
+{
+    "message": "User has been deleted successfully"
+}
+```
 
 ## Orders
 
@@ -253,7 +623,7 @@ The request body needs to be in JSON format.
 | `ProductID`  | number | body   | Yes      | ID of the product.            |
 | `Quantity`       | Number | body   | Yes       | Quantity of the product. |
 
-Note: On the basis of ProductID, it will go to Products table, Search for ProductID then will fill (insert data into records), ProductName, Price, Inserts Order data, Total Price which is product of Price and Quanity, and OrderID will be generated and will be shown in the reponse section.
+Note: On the basis of ProductID, it will go to Products table, search for ProductID, then insert order data with ProductName, Price, and TotalPrice (Price × Quantity). An OrderID will be generated and shown in the response.
 
 Example request body:
 
@@ -269,10 +639,9 @@ Example request body:
 | Status code      | Description                                                                                            |
 | ---------------- | ------------------------------------------------------------------------------------------------------ |
 | 201 Created      | Indicates that the order has been created successfully.                                                |
-| 400 Bad Request  | Invalid ProductID or Quantity                                                    |
+| 400 Bad Request  | Invalid/missing ProductID or Quantity (Quantity must be greater than 0).                                                    |
 | 401 Unauthorized | Unauthorized (missing/invalid token)  |
-| 404 Unauthorized | Product or User not found  |
-
+| 404 Not found | Product or User not found  |
 
 Example response:
 
@@ -283,19 +652,20 @@ Example response:
 }
 ```
 
-### Get all orders
-
-Returns all orders created by the API client.
+### Get all orders / Get a single order
 
 **`/orders`**
 
 **Method:** GET  
+Returns all orders, or a single order if `OrderID` is provided as a query parameter.
 
 **Parameters**
 
 | Name            | Type   | In     | Required | Description                                   |
 | --------------- | ------ | ------ | -------- | --------------------------------------------- |
 | `Authorization` | string | header | Yes      | Specifies the bearer token of the API client. |
+| `OrderID`       | Number | Query  | Optional | If specified, returns that single order as an object. |
+| `CustomerName`  | string | Query  | Optional | If specified, filters orders by CustomerName. |
 
 **Status codes**
 
@@ -303,8 +673,9 @@ Returns all orders created by the API client.
 | ---------------- | ------------------------------------------------------------------------------------------------------ |
 | 200 OK           | Indicates a successful response.                                                                       |
 | 401 Unauthorized | Indicates that the request has not been authenticated. Check the response body for additional details. |
+| 404 Not found    | Indicates that no order(s) match the given filters.                 |
 
-Example response:
+Example response (all orders):
 
 ```
 [
@@ -333,30 +704,7 @@ Example response:
 ]
 ```
 
-### Get a single order
-
-Returns a single order (using Querry Parameters).
-
-**`/orders?OrderID`**
-
-**Method:** GET  
-
-**Parameters**
-
-| Name            | Type    | In     | Required | Description                         |
-| --------------- | ------- | ------ | -------- | ----------------------------------- |
-| `Authorization` | string  | header | Yes      | The bearer token of the API client. |
-| `OrderID`       | Number  | Querry   | Yes      | The order id.                       |
-
-**Status codes**
-
-| Status code      | Description                                                                                            |
-| ---------------- | ------------------------------------------------------------------------------------------------------ |
-| 200 OK           | Indicates a successful response.                                                                       |
-| 401 Unauthorized | Indicates that the request has not been authenticated. Check the response body for additional details. |
-| 404 Not found    | Indicates that there is no order with the specified id associated with the API client.                 |
-
-Example response:
+Example response (single order, `?OrderID=1770167265321`):
 
 ```
 {
@@ -376,7 +724,7 @@ Example response:
 
 **`/orders/delete`**
 
-**Method:** Delete
+**Method:** DELETE
 
 **Parameters**
 
@@ -392,6 +740,7 @@ Example request body:
   "OrderID": 1770167265321
 }
 ```
+
 **Status codes**
 
 | Status code      | Description                                                                                            |
@@ -405,6 +754,6 @@ Example response:
 
 ```
 {
-    "message": "Order with ID 1770167265321 has been deleted successfully"
+    "Message": "Order with ID 1770167265321 has been deleted successfully"
 }
 ```
