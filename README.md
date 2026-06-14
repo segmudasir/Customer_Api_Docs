@@ -14,9 +14,7 @@ But Orders endpoint requires User Authentication. <br>
 
 User needs to register first (Name and Email Address) to get an Access token.<br><br>
 
-Base URL = https://api.geonix.pl
-
-Second URL = https://ecom-api-7hkg.onrender.com (incase if first url is not working)
+Base URL = https://ecom-api-7hkg.onrender.com
 
 ## Endpoints
 
