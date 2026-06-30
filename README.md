@@ -683,8 +683,8 @@ Example response (all orders):
 [
     {
         "OrderID": 1770167113382,
-        "CustomerName": "Mudasir",
-        "Email": "perdesi88@gmail.com",
+        "CustomerName": "Maddy",
+        "Email": "maddy@example.com",
         "ProductID": 5,
         "ProductName": "Boys' Summer Short Sleeve",
         "Price": 19.99,
@@ -694,8 +694,8 @@ Example response (all orders):
     },
     {
         "OrderID": 1770167265321,
-        "CustomerName": "Mudasir",
-        "Email": "perdesi88@gmail.com",
+        "CustomerName": "John",
+        "Email": "John@example.com",
         "ProductID": 4,
         "ProductName": "USB-C Power Bank",
         "Price": 59.99,
@@ -711,8 +711,8 @@ Example response (single order, `?OrderID=1770167265321`):
 ```
 {
     "OrderID": 1770167265321,
-    "CustomerName": "Mudasir",
-    "Email": "perdesi88@gmail.com",
+    "CustomerName": "Maddy",
+    "Email": "maddy@example.com",
     "ProductID": 4,
     "ProductName": "USB-C Power Bank",
     "Price": 59.99,
