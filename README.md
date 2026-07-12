@@ -16,8 +16,6 @@ User needs to register first (Name and Email Address) to get an Access token.<br
 
 Base URL = https://ecom-api-7hkg.onrender.com
 
-Status = https://ecom-api-7hkg.onrender.com/status
-
 ## Endpoints
 
 - [Server Status](#server-status)
