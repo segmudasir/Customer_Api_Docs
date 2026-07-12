@@ -31,7 +31,7 @@ Status = https://ecom-api-7hkg.onrender.com/status
 
 ### Check server status
 
-**`Base URL = https://ecom-api-7hkg.onrender.com`**
+https://ecom-api-7hkg.onrender.com
 
 **Method:** GET
 
