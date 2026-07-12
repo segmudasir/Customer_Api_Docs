@@ -329,7 +329,7 @@ Note: If the submitted values are identical to the existing ones, the response w
 Example Body:
 ```
 {
-  "ProductID": 5
+  "ProductID": 9
 }
 ```
 
@@ -346,7 +346,7 @@ Example response:
 ```
 {
     "message": "Product deleted successfully",
-    "ProductID": 5
+    "ProductID": 9
 }
 ```
 
