@@ -29,7 +29,7 @@ Base URL = https://api.geonixsoft.com
 
 ### Check server status
 
-https://ecom-api-7hkg.onrender.com
+https://api.geonixsoft.com
 
 **Method:** GET
 
