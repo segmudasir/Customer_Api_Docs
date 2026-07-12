@@ -220,10 +220,10 @@ Example response:
 Example Body:
 ```
 {
-  "ProductID": 5,
-  "ProductName": "Boys' Summer Short Sleeve",
+  "ProductID": 9,
+  "ProductName": "Portable Blender Juicer",
   "Price": 19.99,
-  "ImagePath": "images/product5.jpg"
+  "ImagePath": "images/product9.jpg"
 }
 ```
 
@@ -239,7 +239,7 @@ Example response:
 ```
 {
     "Message": "Product added successfully",
-    "ProductID": 5
+    "ProductID": 9
 }
 ```
 
