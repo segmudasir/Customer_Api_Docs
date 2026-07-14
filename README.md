@@ -535,7 +535,7 @@ Example request body:
 
 ```
 {
-   "Name": "Postman",
+   "Name": "PulseAPI",
    "Email": "maddy@example.com"
 }
 ```
