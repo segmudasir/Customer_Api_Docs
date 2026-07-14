@@ -523,14 +523,6 @@ The request body needs to be in JSON format.
 
 \* The email address DOES NOT need to be real. The email will not be stored on the server.
 
-**Status codes**
-
-| Status code     | Description                                                                       |
-|-----------------|-----------------------------------------------------------------------------------|
-| 201 Created     | Indicates that the client has been registered successfully.                       |
-| 400 Bad Request | Indicates that Name and/or Email are missing.                               |
-| 409 Conflict    | Indicates that an API client has already been registered with this email address. |
-
 Example request body:
 
 ```
@@ -539,6 +531,14 @@ Example request body:
    "Email": "maddy@example.com"
 }
 ```
+
+**Status codes**
+
+| Status code     | Description                                                                       |
+|-----------------|-----------------------------------------------------------------------------------|
+| 201 Created     | Indicates that the client has been registered successfully.                       |
+| 400 Bad Request | Indicates that Name and/or Email are missing.                               |
+| 409 Conflict    | Indicates that an API client has already been registered with this email address. |
 
 Example response:
 ```
