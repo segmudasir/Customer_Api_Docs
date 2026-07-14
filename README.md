@@ -554,12 +554,11 @@ Example response:
 **Method:** GET  
 If you've already registered, use this to retrieve your existing access token by Email.
 
-Example request body:
-```
-{
-  "Email": "maddy@example.com"
-}
-```
+**Parameters**
+
+| Name        | Type    | Parameter    | Required | Description                                                                                                | 
+| ----------- | ------- | ----- | -------- | -----------------------------------------------------------------------------------------------------------| 
+| `Email`| String | Query | Required      | User have to provide the Email to retrieve the Access Toekn.  | 
 
 **Status codes**
 
