@@ -551,7 +551,7 @@ Example response:
 
 **`/accesstoken`**
 
-**Method:** POST  
+**Method:** GET  
 If you've already registered, use this to retrieve your existing access token by Email.
 
 Example request body:
