@@ -54,6 +54,7 @@ Example response:
 ### Add Customer
 
 **`/customers/add`**
+https://api.geonixsoft.com/customers/add
 
 **Method:** POST  
 Also called CREATE Request - In this Method something is added or posted on the Server. Therefore usually we require a body.
@@ -91,6 +92,7 @@ Example response:
 ### Get all Customers / Get Customer(s) by filter
 
 **`/customers`**
+https://api.geonixsoft.com/customers
 
 **Method:** GET  
 Also called Retrieve Request - Returns the list of all Customers from Server.
@@ -142,6 +144,7 @@ Example response:
 ### Update Customer
 
 **`/customers/update`**
+https://api.geonixsoft.com/customers/update
 
 **Method:** PUT  
 Also called Update Request - In this method something or some property is updated on the Server. Therefore we require parameters that need to be changed.
@@ -181,6 +184,7 @@ Note: Only the properties that were updated are shown in the response.
 ### Delete Customer
 
 **`/customers/delete`**
+https://api.geonixsoft.com/customers/delete
 
 **Method:** DELETE  
 Also called Delete Request - In this method records are deleted from the Server. We need the CustomerID sent in the body as JSON format.
@@ -214,6 +218,7 @@ Example response:
 ### Add Product
 
 **`/products/add`**
+https://api.geonixsoft.com/products/add
 
 **Method:** POST
 
@@ -246,6 +251,7 @@ Example response:
 ### Get all Products / Get Product(s) by filter
 
 **`/products`**
+https://api.geonixsoft.com/products
 
 **Method:** GET
 
@@ -285,6 +291,7 @@ Example response:
 ### Update Product
 
 **`/products/update`**
+https://api.geonixsoft.com/products/update
 
 **Method:** PUT
 
@@ -323,6 +330,7 @@ Note: If the submitted values are identical to the existing ones, the response w
 ### Delete Product
 
 **`/products/delete`**
+https://api.geonixsoft.com/products/delete
 
 **Method:** DELETE
 
@@ -355,6 +363,7 @@ Example response:
 ### Add item to Cart
 
 **`/cart/additem`**
+https://api.geonixsoft.com/cart/additem
 
 **Method:** POST  
 If the product is already in the cart, its quantity is incremented by 1. Otherwise it is added with quantity 1.
@@ -398,6 +407,7 @@ Example response (existing item):
 ### Update item in Cart
 
 **`/cart/updateitem`**
+https://api.geonixsoft.com/cart/updateitem
 
 **Method:** PUT  
 Sets the quantity of a Product in the cart. If the product isn't in the cart yet, it is inserted with the given quantity. Setting Quantity to 0 removes the item from the cart.
@@ -441,6 +451,7 @@ Example response (removed):
 ### Get all Cart items
 
 **`/cart/getitems`**
+https://api.geonixsoft.com/cart/getitems
 
 **Method:** GET
 
@@ -470,6 +481,7 @@ Example response:
 ### Remove item from Cart
 
 **`/cart/removeitem`**
+https://api.geonixsoft.com/cart/removeitem
 
 **Method:** DELETE
 
@@ -509,6 +521,7 @@ Authorization: Bearer YOUR TOKEN
 ### Register a new API client
 
 **`/users`**
+https://api.geonixsoft.com/users
 
 **Method:** POST  
 
@@ -550,6 +563,7 @@ Example response:
 ### Retrieve Access Token
 
 **`/accesstoken`**
+https://api.geonixsoft.com/accesstoken
 
 **Method:** GET  
 If you've already registered, use this to retrieve your existing access token by Email.
@@ -579,6 +593,7 @@ Example response:
 ### Delete Access Token (Delete API client)
 
 **`/deletetoken`**
+https://api.geonixsoft.com/deletetoken
 
 **Method:** DELETE
 
@@ -609,6 +624,7 @@ Example response:
 ### Create a new order
 
 **`/orders/add`**
+https://api.geonixsoft.com/orders/add
 
 **Method:** POST  
 
@@ -654,6 +670,7 @@ Example response:
 ### Get all orders / Get a single order
 
 **`/orders`**
+https://api.geonixsoft.com/orders
 
 **Method:** GET  
 Returns all orders, or a single order if `OrderID` is provided as a query parameter.
@@ -722,6 +739,7 @@ Example response (single order, `?OrderID=1770167265321`):
 ### Delete an order
 
 **`/orders/delete`**
+https://api.geonixsoft.com/orders/delete
 
 **Method:** DELETE
 
